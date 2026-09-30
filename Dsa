@@ -1,0 +1,284 @@
+Q1. Stack Using Array
+Definition:
+Stack ek linear data structure hai jo LIFO (Last In, First Out) principle follow karta hai. Jo element sabse last mein insert hota hai, wahi sabse pehle remove hota hai.
+Required operations: PUSH, POP, PEEK, DISPLAY. Stack mein capacity se zyada element insert karne par Stack Overflow, aur empty stack se element remove karne par Stack Underflow hota hai. DSA Assignment Structures & Algorithms.docx
+C Program
+#include <stdio.h>
+
+#define MAX 5
+
+int stack[MAX];
+int top = -1;
+
+// PUSH operation
+void push(int x)
+{
+    if (top == MAX - 1)
+    {
+        printf("Stack Overflow!\n");
+    }
+    else
+    {
+        top++;
+        stack[top] = x;
+        printf("%d pushed into stack.\n", x);
+    }
+}
+
+// POP operation
+void pop()
+{
+    if (top == -1)
+    {
+        printf("Stack Underflow!\n");
+    }
+    else
+    {
+        printf("%d popped from stack.\n", stack[top]);
+        top--;
+    }
+}
+
+// PEEK operation
+void peek()
+{
+    if (top == -1)
+    {
+        printf("Stack is empty.\n");
+    }
+    else
+    {
+        printf("Top element = %d\n", stack[top]);
+    }
+}
+
+// DISPLAY operation
+void display()
+{
+    if (top == -1)
+    {
+        printf("Stack is empty.\n");
+    }
+    else
+    {
+        printf("Stack elements are:\n");
+
+        for (int i = top; i >= 0; i--)
+        {
+            printf("%d\n", stack[i]);
+        }
+    }
+}
+
+int main()
+{
+    int choice, value;
+
+    while (1)
+    {
+        printf("\n--- STACK MENU ---\n");
+        printf("1. PUSH\n");
+        printf("2. POP\n");
+        printf("3. PEEK\n");
+        printf("4. DISPLAY\n");
+        printf("5. EXIT\n");
+
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice)
+        {
+            case 1:
+                printf("Enter value: ");
+                scanf("%d", &value);
+                push(value);
+                break;
+
+            case 2:
+                pop();
+                break;
+
+            case 3:
+                peek();
+                break;
+
+            case 4:
+                display();
+                break;
+
+            case 5:
+                return 0;
+
+            default:
+                printf("Invalid choice!\n");
+        }
+    }
+}
+Time and Space Complexity
+Operation
+Time Complexity
+Space Complexity
+PUSH
+O(1)
+O(1)
+POP
+O(1)
+O(1)
+PEEK
+O(1)
+O(1)
+DISPLAY
+O(n)
+O(1)
+Fixed-size stack: Agar stack ki capacity 5 hai aur already 5 elements hain, to next element insert karne par Stack Overflow hoga. DSA Assignment Structures & Algorithms.docx
+Q2. Circular Queue Using Array
+Definition:
+Circular Queue ek queue hai jisme last position ke baad next position first position hoti hai. Isse array ki unused positions ko dobara use kiya ja sakta hai.
+Required operations: ENQUEUE, DEQUEUE, FRONT, DISPLAY. Queue ko properly full aur empty distinguish karna chahiye. DSA Assignment Structures & Algorithms.docx
+C Program
+#include <stdio.h>
+
+#define MAX 5
+
+int queue[MAX];
+int front = -1;
+int rear = -1;
+
+// ENQUEUE operation
+void enqueue(int x)
+{
+    if ((rear + 1) % MAX == front)
+    {
+        printf("Queue is Full!\n");
+    }
+    else
+    {
+        if (front == -1)
+        {
+            front = 0;
+        }
+
+        rear = (rear + 1) % MAX;
+        queue[rear] = x;
+
+        printf("%d inserted into queue.\n", x);
+    }
+}
+
+// DEQUEUE operation
+void dequeue()
+{
+    if (front == -1)
+    {
+        printf("Queue is Empty!\n");
+    }
+    else
+    {
+        printf("%d deleted from queue.\n", queue[front]);
+
+        if (front == rear)
+        {
+            front = -1;
+            rear = -1;
+        }
+        else
+        {
+            front = (front + 1) % MAX;
+        }
+    }
+}
+
+// FRONT operation
+void showFront()
+{
+    if (front == -1)
+    {
+        printf("Queue is Empty!\n");
+    }
+    else
+    {
+        printf("Front element = %d\n", queue[front]);
+    }
+}
+
+// DISPLAY operation
+void display()
+{
+    if (front == -1)
+    {
+        printf("Queue is Empty!\n");
+    }
+    else
+    {
+        int i = front;
+
+        printf("Queue elements are:\n");
+
+        while (1)
+        {
+            printf("%d ", queue[i]);
+
+            if (i == rear)
+                break;
+
+            i = (i + 1) % MAX;
+        }
+
+        printf("\n");
+    }
+}
+
+int main()
+{
+    int choice, value;
+
+    while (1)
+    {
+        printf("\n--- CIRCULAR QUEUE MENU ---\n");
+        printf("1. ENQUEUE\n");
+        printf("2. DEQUEUE\n");
+        printf("3. FRONT\n");
+        printf("4. DISPLAY\n");
+        printf("5. EXIT\n");
+
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice)
+        {
+            case 1:
+                printf("Enter value: ");
+                scanf("%d", &value);
+                enqueue(value);
+                break;
+
+            case 2:
+                dequeue();
+                break;
+
+            case 3:
+                showFront();
+                break;
+
+            case 4:
+                display();
+                break;
+
+            case 5:
+                return 0;
+
+            default:
+                printf("Invalid choice!\n");
+        }
+    }
+}
+Circular Queue vs Linear Queue
+1. Better memory utilization:
+Circular queue mein rear last index par pahunchne ke baad beginning ki unused positions ko reuse kar sakta hai. Isliye memory ka better utilization hota hai. DSA Assignment Structures & Algorithms.docx
+2. Time Complexity:
+ENQUEUE = O(1)
+DEQUEUE = O(1) DSA Assignment Structures & Algorithms.docx
+3. Space Complexity:
+Circular Queue = O(n), jahan n queue ki capacity hai. DSA Assignment Structures & Algorithms.docx
+4. Linear Queue ki problem:
+Linear queue mein agar REAR last index tak pahunch jata hai, to beginning mein kuch positions empty hone ke baad bhi new element insert nahi kiya ja sakta. Is problem ko circular queue solve karta hai. DSA Assignment Structures & Algorithms.docx
